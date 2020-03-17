@@ -20,11 +20,10 @@ namespace NWUDataExtractor.WPF.ViewModel
         private List<ModuleDataEntry> dataEntriesList;
         private string moduleString;
         private List<Module> modules;
-        private IModuleDataService moduleDataService;
+        private readonly IModuleDataService moduleDataService;
         private string pdfLocation = null;
         private int progressValue;
-        BackgroundWorker worker = new BackgroundWorker();
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindowViewModel(IModuleDataService moduleDataService)
@@ -44,7 +43,7 @@ namespace NWUDataExtractor.WPF.ViewModel
             get { return dataEntries; }
             set
             {
-                if(value != dataEntries)
+                if (value != dataEntries)
                 {
                     dataEntries = value;
                     RaisePropertyChanged("DataEntries");
@@ -57,7 +56,7 @@ namespace NWUDataExtractor.WPF.ViewModel
             get { return progressValue; }
             set
             {
-                if(value != progressValue)
+                if (value != progressValue)
                 {
                     progressValue = value;
                     RaisePropertyChanged("ProgressValue");
@@ -71,7 +70,7 @@ namespace NWUDataExtractor.WPF.ViewModel
             get { return moduleString; }
             set
             {
-                if(moduleString != value)
+                if (moduleString != value)
                 {
                     moduleString = value;
                     modules = ListConverter.ConvertToList(moduleString);
@@ -88,18 +87,20 @@ namespace NWUDataExtractor.WPF.ViewModel
         private void LocatePDF(object obj)
         {
             pdfLocation = moduleDataService.GetPDFLocation();
-            
+
         }
 
         private bool CanExtractData(object obj)
         {
-            if (pdfLocation != null && pdfLocation != string.Empty && modules != null)
+            if (pdfLocation != null && ModuleString != string.Empty && modules != null)
                 return true;
             return false;
         }
 
         private async void ExtractData(object obj)
         {
+            //if (dataEntriesList != null)
+            //    dataEntriesList.Clear();
             Progress<double> progress = new Progress<double>();
             progress.ProgressChanged += ReportProgress;
             dataEntriesList = await moduleDataService.GetModuleDataAsync(modules, pdfLocation, progress);

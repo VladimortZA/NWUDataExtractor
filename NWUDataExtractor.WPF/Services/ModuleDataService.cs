@@ -14,21 +14,10 @@ namespace NWUDataExtractor.WPF.Services
     public class ModuleDataService : IModuleDataService
     {
         private readonly IDataExtractor dataExtractor;
-        private int numberOfPages;
 
         public ModuleDataService(IDataExtractor dataExtractor)
         {
             this.dataExtractor = dataExtractor;
-        }
-
-        public int SourceNumberOfPages
-        {
-            get { return numberOfPages; }
-            set
-            {
-                if(value != numberOfPages)
-                    numberOfPages = value;
-            }
         }
 
         public async Task<List<ModuleDataEntry>> GetModuleDataAsync(List<Module> moduleList, string inputPDF, IProgress<double> progress)
