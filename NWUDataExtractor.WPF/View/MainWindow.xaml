@@ -1,0 +1,33 @@
+﻿<Window x:Class="NWUDataExtractor.WPF.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NWUDataExtractor.WPF.View"
+        xmlns:root="clr-namespace:NWUDataExtractor.WPF"
+        mc:Ignorable="d"
+        Title="NWU Data Extractor" 
+        Height="450" Width="800" MinWidth="500"
+        root:ViewModelLocator.AutoWireViewModel="True">
+    
+    <Grid Margin="5,5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+
+        <ProgressBar Grid.Row="0" Grid.ColumnSpan="4" Value="{Binding ProgressValue, Mode=TwoWay}"></ProgressBar>
+        <TextBox Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,5" VerticalScrollBarVisibility="Auto" Text="{Binding ModuleString}"></TextBox>
+        <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5" IsReadOnly="True" ItemsSource="{Binding DataEntries}"></DataGrid>
+        <Button Grid.Row="2" Grid.Column="0" Content="Select PDF" Command="{Binding LocatePDFCommand}"></Button>
+        <Button Grid.Row="2" Grid.Column="2" Content="Extract Data" Command="{Binding ExtractDataCommand}"></Button>
+        <Button Grid.Row="2" Grid.Column="3" Content="Generate CSV" Command="{Binding GenerateCSVCommand}"></Button>
+    </Grid>
+</Window>
