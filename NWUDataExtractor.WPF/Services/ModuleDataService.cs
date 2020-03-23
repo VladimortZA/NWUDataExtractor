@@ -3,6 +3,7 @@ using NWUDataExtractor.Core;
 using NWUDataExtractor.Core.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,14 @@ namespace NWUDataExtractor.WPF.Services
 
         public async Task<List<ModuleDataEntry>> GetModuleDataAsync(List<Module> moduleList, string inputPDF, IProgress<double> progress)
         {
-            return await dataExtractor.GetModuleDataAsync(moduleList, inputPDF, progress);
+            try
+            {
+                return await Task.Run(() => dataExtractor.GetModuleDataAsync(moduleList, inputPDF, progress));
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public string GetPDFLocation()
@@ -46,6 +54,11 @@ namespace NWUDataExtractor.WPF.Services
         public int GetMaxReportValue()
         {
             return dataExtractor.TotalPageCount;
+        }
+
+        public void Cancel()
+        {
+            dataExtractor.Cancel();
         }
     }
 }

@@ -21,17 +21,24 @@ namespace NWUDataExtractor.Core
         Stack<ModuleDataEntry> dataEntries;
         readonly object locker = new object();
         public int TotalPageCount { get; private set; } = 0;
+        CancellationTokenSource cts;
 
         public async Task<List<ModuleDataEntry>> GetModuleDataAsync(List<Module> moduleList, string inputPDF, IProgress<double> progress = null)
         {
+            cts = new CancellationTokenSource();
             dataEntries = new Stack<ModuleDataEntry>();
             int tempCount = 0;
+            ParallelOptions options = new ParallelOptions()
+            {
+                CancellationToken = cts.Token,
+                MaxDegreeOfParallelism = Environment.ProcessorCount
+            };
 
             using (PdfReader reader = new PdfReader(inputPDF))
             {
                 TotalPageCount = reader.NumberOfPages;
 
-                await Task.Run(() => Parallel.For(1, TotalPageCount, (i) =>
+                await Task.Run(() => Parallel.For(1, TotalPageCount, options, (i) =>
                 {
                     string pageData, pageNext, sectionData = string.Empty;
                     DataMatcher matcher = new DataMatcher();
@@ -67,9 +74,16 @@ namespace NWUDataExtractor.Core
                     }
                     matcher.GetMatch(sectionData, MatchType.ProgramName);
                     NewMethod(moduleList, sectionData, matcher);
+                    options.CancellationToken.ThrowIfCancellationRequested();
                 }));
             }
             return new List<ModuleDataEntry>(dataEntries);
+        }
+
+        public void Cancel()
+        {
+            if (cts != null)
+                cts.Cancel();
         }
 
         private void NewMethod(List<Module> moduleList, string sectionData, DataMatcher matcher)
@@ -102,5 +116,7 @@ namespace NWUDataExtractor.Core
             matcher.GetMatch(pageData, MatchType.ProjectCode);
             matcher.GetMatch(pageNext, MatchType.NextPageProj);
         }
+
+        
     }
 }

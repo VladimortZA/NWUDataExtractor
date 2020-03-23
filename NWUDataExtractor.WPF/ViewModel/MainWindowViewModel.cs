@@ -7,9 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NWUDataExtractor.WPF.ViewModel
@@ -23,6 +25,7 @@ namespace NWUDataExtractor.WPF.ViewModel
         private readonly IModuleDataService moduleDataService;
         private string pdfLocation = null;
         private int progressValue;
+        private bool operationStarted = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -87,7 +90,6 @@ namespace NWUDataExtractor.WPF.ViewModel
         private void LocatePDF(object obj)
         {
             pdfLocation = moduleDataService.GetPDFLocation();
-
         }
 
         private bool CanExtractData(object obj)
@@ -99,12 +101,29 @@ namespace NWUDataExtractor.WPF.ViewModel
 
         private async void ExtractData(object obj)
         {
-            //if (dataEntriesList != null)
-            //    dataEntriesList.Clear();
             Progress<double> progress = new Progress<double>();
             progress.ProgressChanged += ReportProgress;
-            dataEntriesList = await moduleDataService.GetModuleDataAsync(modules, pdfLocation, progress);
-            DataEntries = new ObservableCollection<ModuleDataEntry>(dataEntriesList);
+            Debug.WriteLine("clicked!");
+
+            try
+            {
+                if (operationStarted)
+                    moduleDataService.Cancel();
+                else
+                {
+                    operationStarted = true;
+                    dataEntriesList = await moduleDataService.GetModuleDataAsync(modules, pdfLocation, progress);
+                    DataEntries = new ObservableCollection<ModuleDataEntry>(dataEntriesList);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                MessageBox.Show("Cancelled", "The task was sucessfully aborted.\nClick \"OK\" to continue.");
+            }
+            finally
+            {
+                operationStarted = false;
+            }
         }
 
         private void ReportProgress(object sender, double e)

@@ -9,5 +9,6 @@ namespace NWUDataExtractor.Core
     {
         int TotalPageCount { get; }
         Task<List<ModuleDataEntry>> GetModuleDataAsync(List<Module> moduleList, string inputPDF, IProgress<double> progress = null);
+        void Cancel();
     }
 }
