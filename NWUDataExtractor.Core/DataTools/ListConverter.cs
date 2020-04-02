@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NWUDataExtractor.Core
+namespace NWUDataExtractor.Core.DataTools
 {
     public static class ListConverter
     {

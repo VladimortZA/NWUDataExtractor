@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWUDataExtractor.WPF", "NWU
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWUDataExtractor.Core", "NWUDataExtractor.Core\NWUDataExtractor.Core.csproj", "{402C1A01-DABD-4FC2-9F62-89EE545D9BCE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWUDataExtractor.Test", "NWUDataExtractor.Test\NWUDataExtractor.Test.csproj", "{09C05BA6-6F66-4561-923B-3564FEB806E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{402C1A01-DABD-4FC2-9F62-89EE545D9BCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{402C1A01-DABD-4FC2-9F62-89EE545D9BCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{402C1A01-DABD-4FC2-9F62-89EE545D9BCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09C05BA6-6F66-4561-923B-3564FEB806E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09C05BA6-6F66-4561-923B-3564FEB806E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09C05BA6-6F66-4561-923B-3564FEB806E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09C05BA6-6F66-4561-923B-3564FEB806E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

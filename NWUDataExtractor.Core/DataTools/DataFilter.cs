@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NWUDataExtractor.Core
+namespace NWUDataExtractor.Core.DataTools
 {
     internal static class DataFilter
     {
@@ -14,12 +14,11 @@ namespace NWUDataExtractor.Core
             @"\d.\d+\s(?<proCode>\w{6})-(?<curCode>\w{5}):\s*(?:\(old code:\s*(?<oldCode>\w{6}\s*[-:]\s*\w{4,5})\s*?\))?";
         public static string ProgramName { get; } = 
             @"\d.\d+\s\w{6}-\w{5}:\s?(?:\(old code\s*:\s*.*\w{6}[:-]\s*\w{4,5}\s*\))?(?<progName>[\s\S]*?)year";
-        public static string ModulePattern { get; } = 
-            @"(?<=year\s\d\ssemester\s\d).*(?:year\s(?<year>\d)\ssemester\s(?<semester>\d)).*?";
+        public static string ModulePattern { get; } = @".*year\s(?<year>\d).*?";
 
         public static string GetFullModulePattern(string module)
         {
-            return ModulePattern + module;
+            return ModulePattern + module + @"[^\w]";
         }
     }
 }

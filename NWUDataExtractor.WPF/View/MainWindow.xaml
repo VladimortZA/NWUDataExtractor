@@ -25,7 +25,7 @@
 
         <ProgressBar Grid.Row="0" Grid.ColumnSpan="4" Value="{Binding ProgressValue, Mode=TwoWay}"></ProgressBar>
         <TextBox Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,5" VerticalScrollBarVisibility="Auto" Text="{Binding ModuleString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5" IsReadOnly="True" ItemsSource="{Binding DataEntries}"></DataGrid>
+        <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5" ItemsSource="{Binding DataEntries}" IsReadOnly="True"></DataGrid>
         <Button Grid.Row="2" Grid.Column="0" Content="Select PDF" Command="{Binding LocatePDFCommand}"></Button>
         <Button Grid.Row="2" Grid.Column="2" Content="Extract Data" Command="{Binding ExtractDataCommand}"></Button>
         <Button Grid.Row="2" Grid.Column="3" Content="Generate CSV" Command="{Binding GenerateCSVCommand}"></Button>

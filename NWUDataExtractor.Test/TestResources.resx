@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SinglePageSample" xml:space="preserve">
+    <value>HAPTER 2. HEALTH SCIENCES 37
+2.2 8DJH01-G301P: Bachelor of Health Sciences with Physiology
+and Biochemistry(phasing in 2018)
+Year 1 Semester 1 (27)
+07:30 08:00 09:30 11:00 12:15 13:00 14:30 16:00 17:00
+08:00 09:15 10:45 12:15 12:45 14:15 15:45 17:15 17:45
+Optional Optional Optional
+Mo 5A 5A
+NCHE111a
+E3 -G20
+FSKS113b
+F3 -G10
+FSKS113b
+F3 -G10
+10
+FLGX113b
+N2A-G01
+FLGX113b
+F12-211
+FLGX113b
+F12-G14
+FLGX113b
+F12-211
+FLGX113b
+F12-G14
+FLGX113b
+F12-211
+FLGX113b
+F12-G14
+Tu 3B 3B 3A
+MTHS114a
+G1 -102
+MTHS114E
+E8 -G36
+MTHS114a
+G1 -102
+MTHS114E
+E8 -G36
+5B
+MCBN111
+F3 -G10
+MCBN111
+F3 -G10
+MCBN111
+F3 -G10
+We FSKS113b
+G4–302
+FSKS113b
+G4–302
+FSKS113b
+F3 -G10
+FSKS113b
+G4–302
+ALDA111q
+E8 -G36
+ALDE111l
+E8 -K36
+ALDA111q
+E8 -G36
+ALDE111l
+E8 -K36
+FLGX113b
+N2A-G01
+NCHE111a
+E3 -G20
+NCHE111a
+G7 -1-4
+NCHE111a
+G7 -1-4
+NCHE111a
+G7 -1-4
+Th FLGX113b
+N2A-G01
+FLGX113b
+N2A-G01
+MCBN111
+F3 -G10
+ALDA112e
+G1 -112
+ALDA112e
+G1 -112
+MTHS114a
+G1 -102
+MTHS114E
+E8 -G36
+5A 5B 5B
+Fr MCBN111
+F3 -G10
+MCBN111
+F3 -G10
+FSKS113b
+F3 -G10
+NCHE111a
+E3 -G20
+NCHE111a
+E3 -G20
+3B
+MTHS114a
+G1 -102
+MTHS114E
+E8 -G36
+MTHS114a
+G1 -102
+MTHS114E
+E8 -G36
+MTHS114a
+G1 -102
+MTHS114E
+E8 -G36
+Year 2 Semester 1 (25)
+07:30 09:30 11:00 13:00 14:30 16:00
+09:15 10:45 12:45 14:15 15:45 17:45
+Mo
+BCHN213
+F3 -G10
+NCHE212b
+F3 -G10
+STTN111U
+N2A-G01
+10
+NCHE211a
+G16-G18
+NCHE211a
+G9 -G03
+NCHE212b
+G16-G18
+NCHE212b
+G9 -G03
+NCHE211a
+G9 -G03
+NCHE212b
+G9 -G03
+Tu
+FLGX213
+F12-201
+FLGX213
+F12-G14
+FLGX213
+F12-201
+FLGX213
+F12-G14
+FLGX213
+E5 -K03
+STTN111a
+E5 -K04
+BCHN213
+F3 -G10
+2A 2B
+We 6B
+STTN111U
+N2A-G01
+FLGX213
+E5 -K03
+1B 4A 4B
+Th 1A 2B 11
+NCHE211a
+E9 -101
+BCHN213
+F3 -G10
+BCHN213
+F3 -G10
+Fr 2A 6B
+NCHE211a
+E9 -101
+NCHE212b
+F3 -G10
+FLGX213
+E5 -K03
+STTN111a
+E5 -K04
+7B</value>
+    <comment>Single page data sample.</comment>
+  </data>
+</root>

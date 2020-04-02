@@ -27,7 +27,7 @@ namespace NWUDataExtractor.WPF.Services
             {
                 return await Task.Run(() => dataExtractor.GetModuleDataAsync(moduleList, inputPDF, progress));
             }
-            catch
+            catch(OperationCanceledException)
             {
                 throw;
             }

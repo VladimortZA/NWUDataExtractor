@@ -15,22 +15,27 @@ namespace NWUDataExtractor.Core
     {
         public static void GenerateCSV(List<ModuleDataEntry> data)
         {
+            string tempFileName = Environment.CurrentDirectory + @"\temp.csv";
+
+            using (StreamWriter writer = new StreamWriter(tempFileName))
+            using (CsvWriter csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(data);
+            }
+
             SaveFileDialog sfd = new SaveFileDialog()
             {
                 Filter = "CSV file (*.csv)|*.csv",
-                RestoreDirectory = true
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
             };
 
             if(sfd.ShowDialog() == true)
             {
                 if (File.Exists(sfd.FileName))
-                    File.WriteAllText(sfd.FileName, String.Empty);
-
-                using (StreamWriter writer = new StreamWriter(sfd.FileName))
-                using (CsvWriter csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                 {
-                    csv.WriteRecords(data);
-                }
+                    File.Delete(sfd.FileName);
+                    File.Move(tempFileName, sfd.FileName);
+                }   
             }
         }
     }

@@ -43,7 +43,6 @@ namespace NWUDataExtractor.Core.Model
             }
         }
 
-
         public override string ToString()
         {
             return $"{ModuleCode},{Year},{Semester},{Faculty},{ProgrammeCode},{CurriculumCode},{OldCode},{ProgramName}";

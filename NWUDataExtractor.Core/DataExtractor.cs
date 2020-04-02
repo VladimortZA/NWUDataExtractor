@@ -22,8 +22,9 @@ namespace NWUDataExtractor.Core
         readonly object locker = new object();
         public int TotalPageCount { get; private set; } = 0;
         CancellationTokenSource cts;
+        int semester = 0;
 
-        public async Task<List<ModuleDataEntry>> GetModuleDataAsync(List<Module> moduleList, string inputPDF, IProgress<double> progress = null)
+        public async Task<List<ModuleDataEntry>> GetModuleDataAsync(List<Module> moduleList, string pdfPath, IProgress<double> progress = null)
         {
             cts = new CancellationTokenSource();
             dataEntries = new Stack<ModuleDataEntry>();
@@ -34,7 +35,10 @@ namespace NWUDataExtractor.Core
                 MaxDegreeOfParallelism = Environment.ProcessorCount
             };
 
-            using (PdfReader reader = new PdfReader(inputPDF))
+            if (!File.Exists(pdfPath) || System.IO.Path.GetExtension(pdfPath) != ".pdf")
+                return null;
+
+            using (PdfReader reader = new PdfReader(pdfPath))
             {
                 TotalPageCount = reader.NumberOfPages;
 
@@ -44,8 +48,16 @@ namespace NWUDataExtractor.Core
                     DataMatcher matcher = new DataMatcher();
                     lock (locker)
                         pageData = PdfTextExtractor.GetTextFromPage(reader, i);
-                    Interlocked.Increment(ref tempCount);
-                    progress.Report(Math.Round((double)(tempCount * 100) / TotalPageCount));
+
+                    progress?.Report(Math.Round((double)(Interlocked.Increment(ref tempCount) * 100) / TotalPageCount));
+
+                    if (semester == 0)
+                    {
+                        lock (locker)
+                        {
+                            semester = int.Parse(Regex.Match(pageData, @"semester\s*(\d)", RegexOptions.IgnoreCase).Groups[1].Value);
+                        }
+                    }
 
                     if (i < TotalPageCount)
                     {
@@ -67,13 +79,14 @@ namespace NWUDataExtractor.Core
                     if (!matcher.NextPageProjMatch.Success && i < TotalPageCount)
                     {
                         i++;
+                        progress?.Report(Math.Round((double)(Interlocked.Increment(ref tempCount) * 100) / TotalPageCount));
                         if (sectionData == string.Empty)
                             return;
 
                         sectionData += $"\n{pageNext}";
                     }
                     matcher.GetMatch(sectionData, MatchType.ProgramName);
-                    NewMethod(moduleList, sectionData, matcher);
+                    AddMatchedModule(moduleList, sectionData, matcher);
                     options.CancellationToken.ThrowIfCancellationRequested();
                 }));
             }
@@ -86,19 +99,20 @@ namespace NWUDataExtractor.Core
                 cts.Cancel();
         }
 
-        private void NewMethod(List<Module> moduleList, string sectionData, DataMatcher matcher)
+        private void AddMatchedModule(List<Module> moduleList, string sectionData, DataMatcher matcher)
         {
             ModuleDataEntry dataEntry;
             foreach (var module in moduleList)
-            {
-                if (matcher.GetMatch(sectionData, MatchType.Module, module.Code).Success)
+            {             
+                if (sectionData.IndexOf(module.Code, StringComparison.OrdinalIgnoreCase) >= 0 &&
+                    matcher.GetMatch(sectionData, MatchType.Module, module.Code).Success)
                 {
                     dataEntry = new ModuleDataEntry
                     {
                         Faculty = matcher.FacultyMatch.Groups["faculty"].Value,
-                        ModuleCode = module.Code,
+                        ModuleCode = module.Code.ToUpper(),
                         Year = int.TryParse(matcher.ModuleMatch.Groups["year"].Value, out int year) ? year : (int?)null,
-                        Semester = int.TryParse(matcher.ModuleMatch.Groups["semester"].Value, out int semester) ? semester : (int?)null,
+                        Semester = semester,
                         ProgrammeCode = matcher.ProjCodeMatch.Groups["proCode"].Value,
                         CurriculumCode = matcher.ProjCodeMatch.Groups["curCode"].Value,
                         OldCode = matcher.ProjCodeMatch.Groups["oldCode"].Value,
@@ -116,7 +130,5 @@ namespace NWUDataExtractor.Core
             matcher.GetMatch(pageData, MatchType.ProjectCode);
             matcher.GetMatch(pageNext, MatchType.NextPageProj);
         }
-
-        
     }
 }

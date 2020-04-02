@@ -1,4 +1,5 @@
 ﻿using NWUDataExtractor.Core;
+using NWUDataExtractor.Core.DataTools;
 using NWUDataExtractor.Core.Model;
 using NWUDataExtractor.WPF.Extensions;
 using NWUDataExtractor.WPF.Services;
@@ -103,7 +104,6 @@ namespace NWUDataExtractor.WPF.ViewModel
         {
             Progress<double> progress = new Progress<double>();
             progress.ProgressChanged += ReportProgress;
-            Debug.WriteLine("clicked!");
 
             try
             {
