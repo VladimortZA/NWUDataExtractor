@@ -2,12 +2,12 @@ using NUnit.Framework;
 using NWUDataExtractor.Core;
 using NWUDataExtractor.Core.Model;
 using NWUDataExtractor.Test.Utilities;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NWUDataExtractor.Test
+namespace NWUDataExtractor.Test.CoreTests
 {
     public class DataExtractorTest
     {
@@ -15,11 +15,14 @@ namespace NWUDataExtractor.Test
         string pdfLocation = @"Resources\NWUSamplePDF.pdf";
         readonly List<Module> globalModules = new List<Module>() { new Module("STTN111u") };
         List<ModuleDataEntry> globalResult;
+        Progress<double> progress = new Progress<double>();
+        int progressValue;
 
         public DataExtractorTest()
         {
             dataExtractor = new DataExtractor();
-            globalResult = dataExtractor.GetModuleDataAsync(globalModules, pdfLocation).Result;
+            progress.ProgressChanged += (s, e) => progressValue = (int)e;
+            globalResult = dataExtractor.GetModuleDataAsync(globalModules, pdfLocation, progress).Result;
         }
 
         [Test]
@@ -103,6 +106,12 @@ namespace NWUDataExtractor.Test
             var actual = await dataExtractor.GetModuleDataAsync(modules, pdfLocation);
 
             Assert.AreEqual(1, actual.Count);
+        }
+
+        [Test]
+        public void GetModuleDataAsync_ReportProgress_Complete()
+        {
+            Assert.AreEqual(100, progressValue);
         }
     }
 }

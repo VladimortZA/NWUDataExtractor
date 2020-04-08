@@ -9,25 +9,73 @@
         Title="NWU Data Extractor" 
         Height="450" Width="800" MinWidth="500"
         root:ViewModelLocator.AutoWireViewModel="True">
-    
-    <Grid Margin="5,5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
-            <RowDefinition/>
-            <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="150"/>
-        </Grid.ColumnDefinitions>
 
-        <ProgressBar Grid.Row="0" Grid.ColumnSpan="4" Value="{Binding ProgressValue, Mode=TwoWay}"></ProgressBar>
-        <TextBox Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,5" VerticalScrollBarVisibility="Auto" Text="{Binding ModuleString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5" ItemsSource="{Binding DataEntries}" IsReadOnly="True"></DataGrid>
-        <Button Grid.Row="2" Grid.Column="0" Content="Select PDF" Command="{Binding LocatePDFCommand}"></Button>
-        <Button Grid.Row="2" Grid.Column="2" Content="Extract Data" Command="{Binding ExtractDataCommand}"></Button>
-        <Button Grid.Row="2" Grid.Column="3" Content="Generate CSV" Command="{Binding GenerateCSVCommand}"></Button>
-    </Grid>
+  <Window.Resources>
+    <Style x:Key="TextblockPlaceholder" TargetType="{x:Type TextBlock}">
+      <Setter Property="Visibility" Value="Collapsed"/>
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding ElementName=TextboxModuleList, Path=Text}" Value="">
+          <Setter Property="Visibility" Value="Visible"/>
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+    <Style x:Key="TextBoxErrorList" TargetType="{x:Type TextBox}">
+      <Setter Property="Foreground" Value="Red"/>
+      <Setter Property="Visibility" Value="Collapsed"/>
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding HasErrors}" Value="true">
+          <Setter Property="Visibility" Value="Visible"/>
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+    <Style x:Key="Cancelable" TargetType="{x:Type Button}">
+      <Setter Property="Content" Value="Extract Data"/>
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding OperationStarted}" Value="true">
+          <Setter Property="Content" Value="Cancel..."/>
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+  </Window.Resources>
+  
+  <Grid Margin="5,5">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="10"/>
+      <RowDefinition/>
+      <RowDefinition Height="30"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="150"/>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="150"/>
+      <ColumnDefinition Width="150"/>
+    </Grid.ColumnDefinitions>
+
+    <ProgressBar Grid.Row="0" Grid.ColumnSpan="4" Value="{Binding ProgressValue}"></ProgressBar>
+    <TextBox x:Name="TextboxModuleList" Grid.Row="1" TextWrapping="Wrap"
+             AcceptsReturn="True" Margin="0,0,0,5" VerticalScrollBarVisibility="Auto" 
+             Text="{Binding ModuleString, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"></TextBox>
+    <TextBlock IsHitTestVisible="False" Text="Insert modules..." Style="{StaticResource TextblockPlaceholder}"
+               Grid.Row="1" Margin="3,0,0,0" Foreground="DarkGray"></TextBlock>
+
+    <DataGrid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,0,5" 
+              ItemsSource="{Binding DataEntries}" IsReadOnly="True" AutoGenerateColumns="False">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Module Code" Binding="{Binding ModuleCode}"/>
+        <DataGridTextColumn Header="Year" Binding="{Binding Year}"/>
+        <DataGridTextColumn Header="Semester" Binding="{Binding Semester}"/>
+        <DataGridTextColumn Header="Faculty" Binding="{Binding Faculty}"/>
+        <DataGridTextColumn Header="Programme Code" Binding="{Binding ProgrammeCode}"/>
+        <DataGridTextColumn Header="Curriculum Code" Binding="{Binding CurriculumCode}"/>
+        <DataGridTextColumn Header="Old Code" Binding="{Binding OldCode}"/>
+        <DataGridTextColumn Header="Program Name" Binding="{Binding ProgramName}"/>
+      </DataGrid.Columns>
+    </DataGrid>
+    <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding ErrorMessage}" 
+               Margin="0,0,0,5" Style="{StaticResource TextBoxErrorList}" IsReadOnly="True"/>
+    <Button Grid.Row="2" Grid.Column="0" Content="Select PDF" Command="{Binding LocatePDFCommand}"></Button>
+    <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource Cancelable}"
+            Command="{Binding ExtractDataCommand}"></Button>
+    <Button Grid.Row="2" Grid.Column="3" Content="Generate CSV" Command="{Binding GenerateCSVCommand}"></Button>
+  </Grid>
 </Window>

@@ -5,9 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NWUDataExtractor.Core
 {
@@ -35,7 +32,9 @@ namespace NWUDataExtractor.Core
                 {
                     File.Delete(sfd.FileName);
                     File.Move(tempFileName, sfd.FileName);
-                }   
+                }
+                else
+                    File.Move(tempFileName, sfd.FileName);
             }
         }
     }

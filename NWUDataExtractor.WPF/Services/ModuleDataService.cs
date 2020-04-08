@@ -3,11 +3,7 @@ using NWUDataExtractor.Core;
 using NWUDataExtractor.Core.Model;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace NWUDataExtractor.WPF.Services
@@ -27,7 +23,7 @@ namespace NWUDataExtractor.WPF.Services
             {
                 return await Task.Run(() => dataExtractor.GetModuleDataAsync(moduleList, inputPDF, progress));
             }
-            catch(OperationCanceledException)
+            catch (OperationCanceledException)
             {
                 throw;
             }

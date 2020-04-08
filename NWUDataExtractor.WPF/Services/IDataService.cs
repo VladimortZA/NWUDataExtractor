@@ -1,8 +1,6 @@
-﻿ using NWUDataExtractor.Core.Model;
+﻿using NWUDataExtractor.Core.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NWUDataExtractor.WPF.Services

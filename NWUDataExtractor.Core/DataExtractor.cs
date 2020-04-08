@@ -1,15 +1,10 @@
-﻿using CsvHelper;
-using iTextSharp.text.pdf;
+﻿using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
 using NWUDataExtractor.Core.DataTools;
 using NWUDataExtractor.Core.Model;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,7 +37,7 @@ namespace NWUDataExtractor.Core
             {
                 TotalPageCount = reader.NumberOfPages;
 
-                await Task.Run(() => Parallel.For(1, TotalPageCount, options, (i) =>
+                await Task.Run(() => Parallel.For(1, TotalPageCount + 1, options, (i) =>
                 {
                     string pageData, pageNext, sectionData = string.Empty;
                     DataMatcher matcher = new DataMatcher();
@@ -50,7 +45,7 @@ namespace NWUDataExtractor.Core
                         pageData = PdfTextExtractor.GetTextFromPage(reader, i);
 
                     progress?.Report(Math.Round((double)(Interlocked.Increment(ref tempCount) * 100) / TotalPageCount));
-
+                    
                     if (semester == 0)
                     {
                         lock (locker)
@@ -73,18 +68,13 @@ namespace NWUDataExtractor.Core
                     {
                         sectionData = string.Empty;
                         return;
-                    }
+                    } 
                     if (matcher.FacultyMatch.Success && matcher.ProjCodeMatch.Success)
                         sectionData = string.Empty + pageData;
-                    if (!matcher.NextPageProjMatch.Success && i < TotalPageCount)
-                    {
-                        i++;
-                        progress?.Report(Math.Round((double)(Interlocked.Increment(ref tempCount) * 100) / TotalPageCount));
-                        if (sectionData == string.Empty)
-                            return;
 
+                    if (!matcher.NextPageProjMatch.Success && i < TotalPageCount)
                         sectionData += $"\n{pageNext}";
-                    }
+
                     matcher.GetMatch(sectionData, MatchType.ProgramName);
                     AddMatchedModule(moduleList, sectionData, matcher);
                     options.CancellationToken.ThrowIfCancellationRequested();
