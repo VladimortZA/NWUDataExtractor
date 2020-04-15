@@ -37,5 +37,10 @@ namespace NWUDataExtractor.Core
                     File.Move(tempFileName, sfd.FileName);
             }
         }
+
+        public static bool Save()
+        {
+            return false;
+        }
     }
 }

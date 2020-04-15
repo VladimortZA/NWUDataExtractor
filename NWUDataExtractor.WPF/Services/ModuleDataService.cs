@@ -47,11 +47,6 @@ namespace NWUDataExtractor.WPF.Services
             return filePath;
         }
 
-        public int GetMaxReportValue()
-        {
-            return dataExtractor.TotalPageCount;
-        }
-
         public void Cancel()
         {
             dataExtractor.Cancel();

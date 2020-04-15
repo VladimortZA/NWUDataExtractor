@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="WPFTests\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\NWUDataExtractor.Core\NWUDataExtractor.Core.csproj" />
     <ProjectReference Include="..\NWUDataExtractor.WPF\NWUDataExtractor.WPF.csproj" />
   </ItemGroup>
